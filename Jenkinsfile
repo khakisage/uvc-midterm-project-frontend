@@ -84,7 +84,7 @@ pipeline {
                         git config user.name "${GITHUB_USERNAME}"
                         git config user.email "whitewalls@naver.com"
                         git fetch origin
-                        git checkout -b flag origin/flag || git checkout flag
+                         git checkout flag || git checkout -b flag origin/flag
                         git pull --rebase origin flag
                         """
 
@@ -155,7 +155,7 @@ pipeline {
                             git config user.name "${GITHUB_USERNAME}"
                             git config user.email "whitewalls@naver.com"
                             git fetch origin
-                            git checkout -b flag origin/flag
+                            git checkout flag || git checkout -b flag origin/flag
                             git pull --rebase origin flag
                             """
 
@@ -198,7 +198,7 @@ pipeline {
                             git config user.name "${GITHUB_USERNAME}"
                             git config user.email "whitewalls@naver.com"
                             git fetch origin
-                            git checkout -b flag origin/flag
+                            git checkout flag || git checkout -b flag origin/flag
                             git pull --rebase origin flag
                             """
 
