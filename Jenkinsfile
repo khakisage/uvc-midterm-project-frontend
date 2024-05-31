@@ -118,7 +118,6 @@ pipeline {
                                              "docker image prune -a -f"  
                     } else {
                         stopCurrentCommand = "docker container prune -f &&" +
-                                             "docker image prune -a -f"
                     }
 
                     def startNextCommand = "docker run -d --name frontend-${nextEnv} -p ${activePort}:80 whitewalls/frontend:latest"
