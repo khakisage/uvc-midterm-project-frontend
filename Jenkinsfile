@@ -2,13 +2,14 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = 'ap-northeast-2'
         SLACK_CHANNEL = '#프로젝트'
+        AWS_REGION = 'ap-northeast-2'
+        COMMIT_MESSAGE = '⚡[Modify] 코드 수정'
         BLUE_GREEN_STATE_FILE = 'blue_green_state.txt'
-        SLACK_BOT_TOKEN = credentials('slack-credentials')
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
-        GITHUB_CREDENTIALS = credentials('github-credentials')
         GITHUB_TOKEN = credentials('github-tokens')
+        SLACK_BOT_TOKEN = credentials('slack-credentials')
+        GITHUB_CREDENTIALS = credentials('github-credentials')
+        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
     }
 
     stages {
@@ -30,24 +31,24 @@ pipeline {
             }
         }
 
-        // stage('Build Docker Images') {
-        //     steps {
-        //         script {
-        //             docker.build('whitewalls/frontend:latest', '.')
-        //         }
-        //     }
-        // }
+        stage('Build Docker Images') {
+            steps {
+                script {
+                    docker.build('whitewalls/frontend:latest', '.')
+                }
+            }
+        }
 
-        // stage('Push Docker Images') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
-        //                 sh "docker login -u ${env.DOCKER_HUB_USERNAME} -p ${env.DOCKER_HUB_PASSWORD} https://registry.hub.docker.com"
-        //                 sh "docker push whitewalls/frontend:latest"
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Push Docker Images') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                        sh "docker login -u ${env.DOCKER_HUB_USERNAME} -p ${env.DOCKER_HUB_PASSWORD} https://registry.hub.docker.com"
+                        sh "docker push whitewalls/frontend:latest"
+                    }
+                }
+            }
+        }
 
         stage('Deploy to Next Environment') {
             steps {
@@ -95,7 +96,7 @@ pipeline {
 
                         sh """
                         git add ${env.BLUE_GREEN_STATE_FILE}
-                        git commit -m "Update ${env.BLUE_GREEN_STATE_FILE}"
+                        git commit -m "${env.COMMIT_MESSAGE}"
                         git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
                         """
                     }
@@ -166,7 +167,7 @@ pipeline {
 
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
-                            git commit -m "Update ${env.BLUE_GREEN_STATE_FILE}"
+                            git commit -m "${env.COMMIT_MESSAGE}"
                             git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
                             """
                         }
@@ -209,7 +210,7 @@ pipeline {
 
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
-                            git commit -m "Update ${env.BLUE_GREEN_STATE_FILE}"
+                            git commit -m "${env.COMMIT_MESSAGE}"
                             git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
                             """
 
