@@ -18,7 +18,7 @@ pipeline {
                 script {
                     checkout([$class: 'GitSCM', branches: [[name: "*/${env.BRANCH_NAME}"]],
                         doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [],
-                        userRemoteConfigs: [[url: 'https://github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git',
+                        userRemoteConfigs: [[url: 'https://github.com/UVC-Midterm-Project/uvc-midterm-project-frontend.git',
                         credentialsId: GITHUB_CREDENTIALS]]])
 
                     def blueGreenState = sh(script: "git show origin/flag:${env.BLUE_GREEN_STATE_FILE}", returnStdout: true).trim()
@@ -97,7 +97,7 @@ pipeline {
                         sh """
                         git add ${env.BLUE_GREEN_STATE_FILE}
                         git commit -m "${env.COMMIT_MESSAGE}"
-                        git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
+                        git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midterm-Project/uvc-midterm-project-frontend.git flag
                         """
                     }
                 }
@@ -167,7 +167,7 @@ pipeline {
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
                             git commit -m "${env.COMMIT_MESSAGE}"
-                            git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
+                            git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midterm-Project/uvc-midterm-project-frontend.git flag
                             """
                         }
 
@@ -210,7 +210,7 @@ pipeline {
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
                             git commit -m "${env.COMMIT_MESSAGE}"
-                            git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midtern-Project/uvc-midtern-project-frontend.git flag
+                            git push --force https://${env.GITHUB_USERNAME}:${env.GITHUB_TOKEN}@github.com/UVC-Midterm-Project/uvc-midterm-project-frontend.git flag
                             """
 
                             def message = "☔🙀${env.BRANCH_NAME}브랜치에서 ${env.BUILD_NUMBER}번째 프론트엔드 빌드가 실패하였습니다!! 로그를 확인해주세요!!🙀☔"
