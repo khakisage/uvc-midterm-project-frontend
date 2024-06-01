@@ -184,7 +184,7 @@ pipeline {
 
                         def isRunning = sh(script: checkCommand, returnStatus: true) == 0
 
-                        if (isRunning) {
+                        if (!isRunning) {
                         def commandId = sh(script: """
                             aws ssm send-command \\
                                 --document-name "AWS-RunShellScript" \\
