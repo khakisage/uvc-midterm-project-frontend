@@ -34,7 +34,7 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 script {
-                    docker.build('whitewalls/frontend:latest', '.')
+                    docker.build('whitewalls/frontend:latest', '--no-cache .')
                 }
             }
         }
