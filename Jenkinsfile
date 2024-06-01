@@ -179,19 +179,23 @@ pipeline {
                         def currentEnv = env.BLUE_GREEN_STATE
                         def activeEnv = currentEnv == 'blue' ? 'green' : 'blue'
 
-                        def cleanupCommand = "docker stop frontend-${activeEnv} && " + 
-                                             "docker rm frontend-${activeEnv}"
+                        def checkCommand = "docker inspect -f '{{.State.Running}}' frontend-${activeEnv}"
+                        def cleanupCommand = "docker stop frontend-${activeEnv} && docker rm frontend-${activeEnv}"
 
+                        def isRunning = sh(script: checkCommand, returnStatus: true) == 0
+
+                        if (isRunning) {
                         def commandId = sh(script: """
-                        aws ssm send-command \\
-                            --document-name "AWS-RunShellScript" \\
-                            --targets '[{"Key":"tag:Name","Values":["deploy-server"]}]' \\
-                            --parameters '{"commands":["${cleanupCommand}"]}' \\
-                            --region "${AWS_REGION}" \\
-                            --output text --query 'Command.CommandId'
-                        """, returnStdout: true).trim()
+                            aws ssm send-command \\
+                                --document-name "AWS-RunShellScript" \\
+                                --targets '[{"Key":"tag:Name","Values":["deploy-server"]}]' \\
+                                --parameters '{"commands":["${cleanupCommand}"]}' \\
+                                --region "${AWS_REGION}" \\
+                                --output text --query 'Command.CommandId'
+                            """, returnStdout: true).trim()
 
-                        waitForSSMCommandCompletion(commandId)
+                            waitForSSMCommandCompletion(commandId)
+                        }
 
                         withCredentials([usernamePassword(credentialsId: 'github-credentials', usernameVariable: 'GITHUB_USERNAME', passwordVariable: 'GITHUB_TOKEN')]) {
                             sh """
