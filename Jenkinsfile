@@ -32,7 +32,6 @@ pipeline {
                     }
 
                     env.BLUE_GREEN_STATE = blueGreenState
-                    echo env.BLUE_GREEN_STATE
                 }
             }
         }
@@ -65,7 +64,7 @@ pipeline {
                     
                     def currentEnv = env.BLUE_GREEN_STATE
                     def nextEnv = currentEnv == 'blue' ? 'green' : 'blue'
-                    def nextPort = nextEnv == 'blue' ? 3001 : 3002
+                    def nextPort = nextEnv == 'blue' ? 81 : 82
 
                     def stopAndRemoveCommand = "docker stop frontend-${nextEnv} && " +
                                             "docker container prune -f"
@@ -104,7 +103,6 @@ pipeline {
                         def currentEnv = prevEnv == 'blue' ? 'green' : 'blue'
 
                         writeFile file: env.BLUE_GREEN_STATE_FILE, text: currentEnv
-                        echo currentEnv
 
                         sh """
                         git add ${env.BLUE_GREEN_STATE_FILE}
@@ -123,7 +121,7 @@ pipeline {
 
                     def currentEnv = env.BLUE_GREEN_STATE
                     def nextEnv = currentEnv == 'blue' ? 'green' : 'blue'
-                    def activePort = 3000
+                    def activePort = 80
                     def stopCurrentCommand
 
                     if (currentEnv != '') {
@@ -134,7 +132,7 @@ pipeline {
                         stopCurrentCommand = "docker container prune -f"
                     }
 
-                    def startNextCommand = "docker run -d --name frontend-${nextEnv} -p ${activePort}:3000 whitewalls/frontend:latest"
+                    def startNextCommand = "docker run -d --name frontend-${nextEnv} -p ${activePort}:80 whitewalls/frontend:latest"
 
                     def switchCommand = stopCurrentCommand + " && " + startNextCommand
 
@@ -217,7 +215,6 @@ pipeline {
                             def prevEnv = env.BLUE_GREEN_STATE
 
                             writeFile file: env.BLUE_GREEN_STATE_FILE, text: prevEnv
-                            echo prevEnv
 
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
@@ -290,7 +287,6 @@ pipeline {
                             def prevEnv = env.BLUE_GREEN_STATE
 
                             writeFile file: env.BLUE_GREEN_STATE_FILE, text: prevEnv
-                            echo prevEnv
 
                             sh """
                             git add ${env.BLUE_GREEN_STATE_FILE}
