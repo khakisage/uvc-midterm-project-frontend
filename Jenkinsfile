@@ -126,8 +126,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        def curr
-                        entEnv = env.BLUE_GREEN_STATE
+                        def currentEnv = env.BLUE_GREEN_STATE
                         def nextEnv = currentEnv == 'blue' ? 'green' : 'blue'
                         def activePort = 80
                         def stopCurrentCommand
@@ -173,6 +172,7 @@ pipeline {
         failure {
             script {
                 node {
+                    echo env.FAILED_STATE_NAME  
                     def checkEarlyStateCondition = env.FAILED_STATE_NAME != 'Push Docker Images'
 
                     if (checkEarlyStateCondition) {
