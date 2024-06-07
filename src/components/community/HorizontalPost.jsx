@@ -1,9 +1,17 @@
 import NoImage from '../../assets/noImage.svg?react';
 
-function HorizontalPost({ id, board, likes, title, views, date, writer }) {
+function HorizontalPost({
+  id,
+  board,
+  likes,
+  title,
+  views,
+  date,
+  writer
+}) {
   // const { id, board, likes, title, views, date, writer } = posts;
   return (
-    <div className="hover:bg-mainBlue5 flex h-[4.5rem] w-[52rem] flex-row gap-4 rounded-md bg-white px-4">
+    <div className="hover:bg-mainBlue-500 flex h-[4.5rem] w-[52rem] flex-row gap-4 rounded-md bg-white px-4">
       <div className="flex  w-7 items-center justify-center">
         <p>{likes}</p>
       </div>
