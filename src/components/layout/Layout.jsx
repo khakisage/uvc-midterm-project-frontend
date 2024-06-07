@@ -1,4 +1,5 @@
 import Banner from '../common/Banner';
+import Header from '../common/Header';
 
 function Layout({ children }) {
   // 화면의 크기는 1440 * 1024 이다.
@@ -9,8 +10,11 @@ function Layout({ children }) {
 
   return (
     <div>
-      <Banner />
-      <div className="bg-bgGray z-30 flex h-[1024px] w-full flex-row">{children}</div>
+      <Header />
+      <div className="flex h-[952px] w-full flex-row justify-center bg-bgGray">
+        <Banner />
+        <div className="z-10 mt-28 flex flex-row gap-2">{children}</div>
+      </div>
     </div>
   );
 }

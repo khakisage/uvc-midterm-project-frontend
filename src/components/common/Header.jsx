@@ -3,6 +3,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import ThemeButton from './ThemeButton';
 import themeAtom from '../../atoms/themeAtom';
+import Banner from './Banner';
 
 function Header() {
   // 헤더의 위치는 상단에 고정되어 있어야 한다.
@@ -16,7 +17,7 @@ function Header() {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
   return (
-    <header className="fixed z-50 flex h-[72px] w-full flex-row justify-between bg-white px-8">
+    <header className="z-50 flex h-[72px] w-full flex-row justify-between bg-white px-8">
       <div id="logo">
         <Logo width={72} height={72} />
       </div>
