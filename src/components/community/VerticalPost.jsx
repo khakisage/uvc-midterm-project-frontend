@@ -8,16 +8,16 @@ function VerticalPost({ board, like, view, content, date, writer }) {
       </div>
       <div className="flex h-28 flex-col items-center justify-center px-4">
         <div className="flex w-full flex-row justify-between">
-          <div>자유</div>
+          <div>{board}</div>
           <div className="flex flex-row gap-1">
-            <div>조회 1</div>
-            <div>좋아요 1</div>
+            <div>조회 {view}</div>
+            <div>좋아요 {like}</div>
           </div>
         </div>
-        <div className="line-clamp-1 h-6">안녕하세요~~~~~. 김범숨다.</div>
+        <div className="line-clamp-1 h-6">{content}</div>
         <div className="flex w-full flex-row justify-between">
-          <div>2024.06.04</div>
-          <div>김범수</div>
+          <div>{date}</div>
+          <div>{writer}</div>
         </div>
       </div>
     </div>

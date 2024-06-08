@@ -8,6 +8,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import layoutAtom from '../../atoms/layoutAtom';
 import HorizontalView from './HorizontalView';
+import VerticalPost from './VerticalPost';
 import { dummyData } from '../../mock/dummy';
 
 function Pagination() {
@@ -40,7 +41,7 @@ function Pagination() {
 
   return (
     <div className="flex flex-col">
-      <div className="h-[648px]">
+      <div className="h-[648px] rounded-md bg-white">
         {/* 조건부 렌더링 */}
         {layout.horizontal ? (
           <HorizontalView posts={currentPosts} />
