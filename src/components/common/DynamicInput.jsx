@@ -9,14 +9,14 @@ function DynamicInput({ type, value, onChange, placeholder }) {
     setIsFocus(false);
   };
   return (
-    <div className="relative h-[3.125rem] w-[35.5rem]">
+    <div className="relative h-[3.125rem] w-[17.75rem]">
       <input
         type={type}
         placeholder=" "
         value={value}
         onChange={onChange}
-        className={`p2-reg disabled:border-mainBlue-300 peer w-full rounded-md border border-gray-300 bg-white px-4 py-3 placeholder:text-gray-400 disabled:text-gray-300 ${
-          isFocused ? 'border-mainBlue' : 'border-gray-300'
+        className={`p2-reg disabled:border-mainBlue-300 peer w-full rounded-md border  bg-white px-4 py-3 placeholder:text-gray-400 disabled:text-gray-300 ${
+          isFocused ? 'border-mainBlue' : ''
         }`}
         required
         autoComplete="off"
