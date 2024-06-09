@@ -1,10 +1,10 @@
 import Logo from '@assets/logo.svg?react';
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ThemeButton from './ThemeButton';
 import themeAtom from '../../atoms/themeAtom';
 import Banner from './Banner';
-import { useNavigate } from 'react-router-dom';
 
 function Header() {
   // 헤더의 위치는 상단에 고정되어 있어야 한다.
@@ -13,14 +13,22 @@ function Header() {
   // 로그인 시, 알림 버튼이 추가로 들어간다.
   const navigate = useNavigate();
   const [theme, setTheme] = useAtom(themeAtom);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
+
+  const goToMain = () => {
+    navigate('/');
+  };
+
+  const goToLogin = () => {
+    navigate('/login');
+  };
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
   return (
-    <header className="z-50 flex h-[72px] w-full flex-row justify-between bg-white px-8">
-      <button id="logo" onClick={() => navigate('/')}>
+    <header className="sticky z-50 flex h-[72px] w-full flex-row justify-between bg-white px-8">
+      <button id="logo" onClick={goToMain} aria-label="main button">
         <Logo width={72} height={72} />
       </button>
       <div id="menu" className="flex flex-row gap-8">
@@ -34,7 +42,9 @@ function Header() {
             <button>로그아웃</button>
           </>
         ) : (
-          <button onClick={() => navigate('/login')}>로그인</button>
+          <button onClick={goToLogin} aria-label="login button">
+            로그인
+          </button>
         )}
 
         {/* 로그인 되어있지 않을 때 */}
