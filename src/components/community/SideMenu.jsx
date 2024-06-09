@@ -6,7 +6,7 @@ import Profile from './Profile';
 
 function SideMenu() {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const handleLoginButtonClick = () => {
     navigate('/login');
   };
@@ -18,7 +18,7 @@ function SideMenu() {
     <div className="flex flex-col gap-1">
       <Profile />
       {isLogin ? (
-        <Button width={20.5} height={4.5} type="filled">
+        <Button width={20.5} height={4.5} type="filled" onClick={handlePostButtonClick}>
           글쓰기
         </Button>
       ) : (

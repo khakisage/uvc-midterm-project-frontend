@@ -2,9 +2,9 @@ import DefaultImage from '../../assets/defaultImage.svg?react';
 
 function VerticalPost({ board, like, view, content, date, writer }) {
   return (
-    <div className="flex h-[17rem] w-48 flex-col rounded-md bg-white">
-      <div className="my-2 flex h-[8.5rem] items-center justify-center">
-        <DefaultImage w={120} h={120} />
+    <div className="flex h-[12.813rem] w-[16.625rem] flex-col rounded-md bg-bgGray">
+      <div className="my-2 flex h-24 items-center justify-center">
+        <DefaultImage w={100} h={100} />
       </div>
       <div className="flex h-28 flex-col items-center justify-center px-4">
         <div className="flex w-full flex-row justify-between">

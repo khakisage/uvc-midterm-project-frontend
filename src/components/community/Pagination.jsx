@@ -10,12 +10,14 @@ import layoutAtom from '../../atoms/layoutAtom';
 import HorizontalView from './HorizontalView';
 import VerticalPost from './VerticalPost';
 import { dummyData } from '../../mock/dummy';
+import SearchBar from '../common/SearchBar';
+import VerticalView from './VerticalView';
 
 function Pagination() {
   // layoutAtom의 값에 따라 가로형 레이아웃과 세로형 레이아웃을 선택한다.
   // 다만 현재 컴포넌트에선 layoutAtom의 상태만 필요하고, setLayout은 필요하지 않다.
   // layout이 true면 가로형 레이아웃, false면 세로형 레이아웃이다.
-  const [layout] = useAtom(layoutAtom);
+  const [{ layout }] = useAtom(layoutAtom);
   const postCount = dummyData.length;
   const postPerPage = 9;
   const [currentPage, setCurrentPage] = useState(1);
@@ -41,12 +43,13 @@ function Pagination() {
 
   return (
     <div className="flex flex-col">
-      <div className="h-[648px] rounded-md bg-white">
-        {/* 조건부 렌더링 */}
-        {layout.horizontal ? (
+      <SearchBar />
+      {/* 조건부 렌더링 */}
+      <div className="h-[40.5rem] rounded-md bg-white">
+        {layout === 'horizontal' ? (
           <HorizontalView posts={currentPosts} />
         ) : (
-          <VerticalPost posts={currentPosts} />
+          <VerticalView posts={currentPosts} />
         )}
       </div>
       {/* 페이지네이션 */}
