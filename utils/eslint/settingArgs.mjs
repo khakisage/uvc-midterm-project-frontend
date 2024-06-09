@@ -52,6 +52,7 @@ const settingArgs = {
     'react/prop-types': 0,
     'react/jsx-no-bind': 0,
     'prettier/prettier': 0,
+    'no-param-reassign': 0,
     'object-curly-newline': 0,
     'react/button-has-type': 0,
     'react/self-closing-comp': 0,
