@@ -10,7 +10,7 @@ function Layout({ children }) {
   return (
     <div>
       <Header />
-      <div className="flex h-[952px] w-full flex-row justify-center bg-bgGray">
+      <div className="flex h-[calc(100vh-72px)] w-full flex-row justify-center bg-bgGray">
         <Banner />
         <div className="z-10 mt-28 flex flex-row gap-2">{children}</div>
       </div>
