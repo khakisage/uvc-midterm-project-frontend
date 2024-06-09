@@ -4,8 +4,7 @@ import { atom } from 'jotai';
 // 가로형이 true, 세로형이 false이다.
 
 const layoutAtom = atom({
-  horizontal: true,
-  vertical: false
+  layout: 'horizontal'
 });
 
 export default layoutAtom;
