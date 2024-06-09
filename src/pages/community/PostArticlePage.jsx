@@ -6,7 +6,7 @@ function PostArticlePage() {
   return (
     <Layout>
       <SideMenu />
-      <PostArticleForm />
+      <PostArticleForm isEditing={false} postData={null} />
     </Layout>
   );
 }

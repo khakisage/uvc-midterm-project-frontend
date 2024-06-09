@@ -5,29 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import { apiInstance } from '../../api/api';
 
-function PostArticleForm() {
+function PostArticleForm({ isEditing, postData }) {
   const navigate = useNavigate();
+  const [isEditMode, setIsEditMode] = useState(isEditing);
+  const [title, setTitle] = useState(postData?.title || '');
+  const [content, setContent] = useState(postData?.content || '');
   const [selectedBoard, setSelectedBoard] = useState('자유게시판');
-
-  // const handleImageUpload = (file, callback) => {
-  //   const formData = new FormData();
-  //   formData.append('image', file);
-
-  //   // 서버로 이미지를 보내는 로직
-  //   console.log('전송됐나요?', callback);
-  //   // apiInstance
-  //   //   .post('/image', formData)
-  //   //   .then((response) => {
-  //   //     callback(response.data.imageUrl);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.error(error);
-  //   //     callback(null, 'upload failed');
-  //   //   });
-  // };
 
   const handleBoardChange = (e) => {
     setSelectedBoard(e.target.value);
+  };
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
   };
 
   const handleCancel = () => {
@@ -39,6 +29,14 @@ function PostArticleForm() {
       toolbar: [[{ header: [1, 2, false] }], ['image']]
     }
   });
+
+  useEffect(() => {
+    if (isEditMode && quill) {
+      quill.setContents(JSON.parse(postData.content));
+      setTitle(postData.title);
+      setSelectedBoard(postData.boardType);
+    }
+  }, [isEditMode, quill, postData]);
 
   const insertToEditor = (url) => {
     const range = quill.getSelection();
@@ -76,12 +74,17 @@ function PostArticleForm() {
       const content = quill.root.innerHTML;
       const formData = new FormData();
       formData.append('content', content);
+      formData.append('title', title);
       formData.append('boardType', selectedBoard);
 
       try {
-        // 서버로 formData를 보내는 로직 추가
-        await apiInstance.post('/posts', formData);
-        navigate('/');
+        if (isEditMode) {
+          await apiInstance.put(`/posts/${postData.id}`, formData);
+        } else {
+          // 서버로 formData를 보내는 로직 추가
+          await apiInstance.post('/posts', formData);
+          navigate('/');
+        }
       } catch (error) {
         console.error('Error uploading post:', error);
         // 에러 처리 로직 추가
@@ -93,11 +96,20 @@ function PostArticleForm() {
     <div className="flex w-[52rem] flex-col gap-2">
       <div className="flex h-[4.5rem] w-[52rem] flex-row items-center justify-between rounded-md bg-white px-4 focus:outline-none">
         <h2>글쓰기</h2>
-        <select value={selectedBoard} onChange={handleBoardChange}>
-          <option>자유게시판</option>
-          <option>질문게시판</option>
-          <option>정보게시판</option>
-        </select>
+        <input
+          type="text"
+          value={title}
+          onChange={handleTitleChange}
+          className="mr-4 w-96 rounded-md border border-gray-300 px-3 py-2 focus:outline-none"
+          placeholder="제목을 입력하세요"
+        />
+        <div className="flex items-center">
+          <select value={selectedBoard} onChange={handleBoardChange}>
+            <option>자유게시판</option>
+            <option>질문게시판</option>
+            <option>정보게시판</option>
+          </select>
+        </div>
       </div>
       <div className="h-[30rem] w-[52rem] bg-white">
         <div ref={quillRef}></div>
