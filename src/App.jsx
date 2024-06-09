@@ -1,4 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import { Provider } from 'jotai';
 // import Header from '@components/common/Header';
 import Router from './Router';
@@ -9,7 +10,9 @@ function App() {
   return (
     <BrowserRouter>
       <Provider>
-        <Router />
+        <CookiesProvider>
+          <Router />
+        </CookiesProvider>
       </Provider>
     </BrowserRouter>
   );
